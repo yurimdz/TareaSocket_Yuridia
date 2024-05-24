@@ -11,17 +11,15 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Cliente {
-
     private static JTextArea textArea;
     private static DataOutputStream out;
     private static FileWriter logWriter;
 
     public static void main(String[] args) {
+        final String HOST = "localhost";
+        final int PUERTO = 2000;
 
-        final String HOST = "192.168.100.25";
-        final int PUERTO = 3000;
-
-        JFrame frame = new JFrame("Cliente");
+        JFrame frame = new JFrame("Cliente Restaurante");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
         frame.setLayout(new BorderLayout());
@@ -39,32 +37,25 @@ public class Cliente {
         JButton sendButton = new JButton("Enviar");
         panel.add(sendButton, BorderLayout.EAST);
 
-        JButton menuButton = new JButton("Ver Menú");
-        panel.add(menuButton, BorderLayout.WEST);
+        JButton verMenuButton = new JButton("Ver Menú");
+        panel.add(verMenuButton, BorderLayout.WEST);
 
         frame.add(panel, BorderLayout.SOUTH);
         frame.setVisible(true);
 
         try {
-
             Socket sc = new Socket(HOST, PUERTO);
             DataInputStream in = new DataInputStream(sc.getInputStream());
             out = new DataOutputStream(sc.getOutputStream());
             logWriter = new FileWriter("client_log.txt", true);
 
             Thread serverHandler = new Thread(() -> {
-
                 try {
-
                     while (true) {
-
                         String mensaje = in.readUTF();
                         logMessage("Servidor", mensaje);
-
                     }
-
                 } catch (IOException e) {
-
                     logMessage("Error", "Error al leer mensaje del servidor: " + e.getMessage());
                 }
             });
@@ -88,9 +79,8 @@ public class Cliente {
                 }
             });
 
-            menuButton.addActionListener(new ActionListener() {
+            verMenuButton.addActionListener(new ActionListener() {
                 @Override
-
                 public void actionPerformed(ActionEvent e) {
                     try {
                         out.writeUTF("menu");
@@ -106,7 +96,6 @@ public class Cliente {
     }
 
     private static void logMessage(String role, String message) {
-
         textArea.append(role + ": " + message + "\n");
         try {
             if (logWriter != null) {

@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Servidor {
-
     private static JTextArea textArea;
     private static DataOutputStream out;
     private static FileWriter logWriter;
@@ -22,8 +21,7 @@ public class Servidor {
     private static StringBuilder historialPedidos = new StringBuilder();
 
     public static void main(String[] args) {
-
-        final int PUERTO = 3000;
+        final int PUERTO = 2000;
 
         JFrame frame = new JFrame("Servidor Restaurante");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,11 +41,8 @@ public class Servidor {
         JButton sendButton = new JButton("Enviar");
         panel.add(sendButton, BorderLayout.EAST);
 
-        JButton menuButton = new JButton("Ver Menú");
-        panel.add(menuButton, BorderLayout.WEST);
-
         JButton eliminarButton = new JButton("Eliminar Producto");
-        panel.add(eliminarButton, BorderLayout.SOUTH);
+        panel.add(eliminarButton, BorderLayout.WEST);
 
         JButton modificarButton = new JButton("Modificar Producto");
         panel.add(modificarButton, BorderLayout.NORTH);
@@ -59,7 +54,6 @@ public class Servidor {
 
         try {
             ServerSocket servidor = new ServerSocket(PUERTO);
-
             logWriter = new FileWriter("server_log.txt", true);
             logMessage("Servidor", "Se ha iniciado el servidor");
 
@@ -68,7 +62,6 @@ public class Servidor {
             out = new DataOutputStream(sc.getOutputStream());
 
             Thread clientHandler = new Thread(() -> {
-
                 try {
                     while (true) {
                         String mensaje = in.readUTF();
@@ -101,34 +94,12 @@ public class Servidor {
                 }
             });
 
-            menuButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    try {
-                        out.writeUTF(obtenerMenu());
-                    } catch (IOException ex) {
-                        logMessage("Error", "Error al enviar el menú: " + ex.getMessage());
-                    }
-                }
-            });
-
             eliminarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String numeroProducto = JOptionPane.showInputDialog("Ingrese el número del producto a eliminar:");
                     eliminarProducto(numeroProducto);
                 }
-
-                private void eliminarProducto(String numeroProducto) {
-                    if (menu.containsKey(numeroProducto)) {
-                        String productoEliminado = menu.remove(numeroProducto);
-                        logMessage("Servidor", "Producto eliminado del menú: " + productoEliminado);
-                    } else {
-                        logMessage("Error", "No existe un producto con el número " + numeroProducto + " en el menú.");
-                    }
-                }
-
             });
 
             modificarButton.addActionListener(new ActionListener() {
@@ -140,18 +111,6 @@ public class Servidor {
                     double nuevoPrecio = Double.parseDouble(nuevoPrecioStr);
                     modificarProducto(numeroProducto, nuevoNombre, nuevoPrecio);
                 }
-
-                private void modificarProducto(String numeroProducto, String nuevoNombre, double nuevoPrecio) {
-                    if (menu.containsKey(numeroProducto)) {
-                        String productoAnterior = menu.get(numeroProducto);
-                        menu.put(numeroProducto, nuevoNombre + " - ₡" + nuevoPrecio);
-                        logMessage("Servidor", "Producto modificado en el menú: " + productoAnterior + " -> "
-                                + nuevoNombre + " - ₡" + nuevoPrecio);
-                    } else {
-                        logMessage("Error", "No existe un producto con el número " + numeroProducto + " en el menú.");
-                    }
-                }
-
             });
 
         } catch (IOException e) {
@@ -169,11 +128,9 @@ public class Servidor {
         menu.put("6", "Nuggets (10) - ₡4 000");
         menu.put("7", "Agua en botella 700ml - ₡1 000");
         menu.put("8", "Tropical 700ml - ₡1 500");
-
     }
 
     private static String procesarMensaje(String mensaje) {
-
         if (mensaje.equalsIgnoreCase("menu")) {
             return obtenerMenu();
         } else if (menu.containsKey(mensaje)) {
@@ -181,17 +138,40 @@ public class Servidor {
             agregarPedidoAlHistorial(pedido);
             return "Pedido recibido: " + pedido;
         } else {
-            return "Le saludamos. Escriba 'menu' o presione 'Ver Menú' para ver las opciones.";
+            return "Producto no encontrado en el menú. Escriba 'menu' para ver las opciones.";
         }
     }
 
     private static String obtenerMenu() {
-
-        StringBuilder sb = new StringBuilder("Menu (escriba el número del producto para seleccionar):\n\n");
+        StringBuilder sb = new StringBuilder("Menu:\n");
         for (Map.Entry<String, String> entry : menu.entrySet()) {
             sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
         }
         return sb.toString();
+    }
+
+    private static void eliminarProducto(String numeroProducto) {
+        if (menu.containsKey(numeroProducto)) {
+            String productoEliminado = menu.remove(numeroProducto);
+            logMessage("Servidor", "Producto eliminado: " + productoEliminado);
+        } else {
+            logMessage("Error", "Producto no encontrado: " + numeroProducto);
+        }
+    }
+
+    private static void modificarProducto(String numeroProducto, String nuevoNombre, double nuevoPrecio) {
+        if (menu.containsKey(numeroProducto)) {
+            String productoModificado = nuevoNombre + " - ₡" + nuevoPrecio;
+            menu.put(numeroProducto, productoModificado);
+            logMessage("Servidor", "Producto modificado: " + productoModificado);
+        } else {
+            logMessage("Error", "Producto no encontrado: " + numeroProducto);
+        }
+    }
+
+    private static void agregarPedidoAlHistorial(String pedido) {
+        historialPedidos.append(pedido).append("\n");
+        logMessage("Servidor", "Historial actualizado.");
     }
 
     private static void logMessage(String role, String message) {
@@ -204,14 +184,5 @@ public class Servidor {
         } catch (IOException e) {
             textArea.append("Error al registrar el mensaje: " + e.getMessage() + "\n");
         }
-    }
-
-    private static void agregarPedidoAlHistorial(String pedido) {
-        historialPedidos.append("Pedido: ").append(pedido).append("\n");
-    }
-
-    public static String obtenerHistorialPedidos() {
-        return historialPedidos.toString();
-
     }
 }
