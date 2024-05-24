@@ -13,3 +13,67 @@ Servidor: Menu (escriba el número del producto para seleccionar):
 8: Tropical 700ml - ?1 500
 
 Error: Error al leer mensaje del servidor: Connection reset
+Cliente: Hola
+Servidor: Le saludamos. Escriba 'menu' o presione 'Ver Menú' para ver las opciones.
+
+Cliente: menu
+Servidor: Menu (escriba el número del producto para seleccionar):
+
+1: Hamburguesa - ?3 500
+2: Pizza - ?5 550
+3: Ensalada - ?3 000
+4: Gaseosa 700ml - ?1 500
+5: Milkshake - ?2 500
+6: Nuggets (10) - ?4 000
+7: Agua en botella 700ml - ?1 000
+8: Tropical 700ml - ?1 500
+
+Servidor: Menu (escriba el número del producto para seleccionar):
+
+1: Hamburguesa - ?3 500
+2: Pizza - ?5 550
+3: Ensalada - ?3 000
+4: Gaseosa 700ml - ?1 500
+5: Milkshake - ?2 500
+6: Nuggets (10) - ?4 000
+7: Agua en botella 700ml - ?1 000
+8: Tropical 700ml - ?1 500
+
+Cliente: 1
+Servidor: Pedido recibido: Hamburguesa - ?3 500
+Cliente: 5
+Servidor: Pedido recibido: Milkshake - ?2 500
+Servidor: Menu (escriba el número del producto para seleccionar):
+
+1: Hamburguesa - ?3 500
+2: Pizza - ?5 550
+3: Ensalada - ?3 000
+4: Gaseosa 700ml - ?1 500
+5: Milkshake - ?2 500
+6: Nuggets (10) - ?4 000
+7: Agua en botella 700ml - ?1 000
+8: Tropical 700ml - ?1 500
+
+Servidor: Menu (escriba el número del producto para seleccionar):
+
+1: Hamburguesa - ?3 500
+2: Pizza - ?5 550
+3: Ensalada - ?3 000
+4: Gaseosa 700ml - ?1 500
+5: Limonada - ?2000.0
+6: Nuggets (10) - ?4 000
+7: Agua en botella 700ml - ?1 000
+8: Tropical 700ml - ?1 500
+
+Servidor: Menu (escriba el número del producto para seleccionar):
+
+1: Hamburguesa - ?3 500
+2: Pizza - ?5 550
+3: Ensalada - ?3 000
+4: Gaseosa 700ml - ?1 500
+6: Nuggets (10) - ?4 000
+7: Agua en botella 700ml - ?1 000
+8: Tropical 700ml - ?1 500
+
+Servidor: Hola
+Error: Error al leer mensaje del servidor: Connection reset

@@ -60,7 +60,7 @@ public class Servidor {
         try {
             ServerSocket servidor = new ServerSocket(PUERTO);
             logWriter = new FileWriter("server_log.txt", true);
-            logMessage("Servidor", "Se ha iniciado el servidor");
+            logMessage("Servidor", "Se ha iniciado el servidor\n");
 
             Socket sc = servidor.accept();
             DataInputStream in = new DataInputStream(sc.getInputStream());
@@ -179,7 +179,7 @@ public class Servidor {
         agregarPedidoAlHistorial(pedido);
         return "Pedido recibido: " + pedido;
     } else {
-        return "Le saludamos. Escriba 'menu' o presione 'Ver Menú' para ver las opciones.";
+        return "Le saludamos. Escriba 'menu' o presione 'Ver Menú' para ver las opciones.\n";
     }
 }
 

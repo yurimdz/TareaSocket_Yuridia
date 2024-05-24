@@ -13,3 +13,50 @@ Servidor: Menu (escriba el número del producto para seleccionar):
 7: Agua en botella 700ml - ?1 000
 8: Tropical 700ml - ?1 500
 
+Servidor: Se ha iniciado el servidor
+
+Cliente: Hola
+Servidor: Le saludamos. Escriba 'menu' o presione 'Ver Menú' para ver las opciones.
+
+Cliente: menu
+Servidor: Menu (escriba el número del producto para seleccionar):
+
+1: Hamburguesa - ?3 500
+2: Pizza - ?5 550
+3: Ensalada - ?3 000
+4: Gaseosa 700ml - ?1 500
+5: Milkshake - ?2 500
+6: Nuggets (10) - ?4 000
+7: Agua en botella 700ml - ?1 000
+8: Tropical 700ml - ?1 500
+
+Cliente: menu
+Servidor: Menu (escriba el número del producto para seleccionar):
+
+1: Hamburguesa - ?3 500
+2: Pizza - ?5 550
+3: Ensalada - ?3 000
+4: Gaseosa 700ml - ?1 500
+5: Milkshake - ?2 500
+6: Nuggets (10) - ?4 000
+7: Agua en botella 700ml - ?1 000
+8: Tropical 700ml - ?1 500
+
+Cliente: 1
+Servidor: Pedido recibido: Hamburguesa - ?3 500
+Cliente: 5
+Servidor: Pedido recibido: Milkshake - ?2 500
+Servidor: Producto modificado en el menú: Milkshake - ?2 500 -> Limonada - ?2000.0
+Servidor: Producto eliminado del menú: Limonada - ?2000.0
+Cliente: menu
+Servidor: Menu (escriba el número del producto para seleccionar):
+
+1: Hamburguesa - ?3 500
+2: Pizza - ?5 550
+3: Ensalada - ?3 000
+4: Gaseosa 700ml - ?1 500
+6: Nuggets (10) - ?4 000
+7: Agua en botella 700ml - ?1 000
+8: Tropical 700ml - ?1 500
+
+Servidor: Hola
